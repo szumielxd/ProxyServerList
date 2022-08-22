@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>szproxyserverlist-velocity</artifactId>
+	<parent>
+		<groupId>me.szumielxd</groupId>
+		<artifactId>szproxyserverlist-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>${parent.groupId}</groupId>
+			<artifactId>szproxyserverlist-common</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>me.carleslc.Simple-YAML</groupId>
+			<artifactId>Simple-Yaml</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.velocitypowered</groupId>
+			<artifactId>velocity-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	
+	<!-- Build -->
+	<build>
+		<defaultGoal>clean package</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.java</include>
+					<include>plugin.yml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/*.java</exclude>
+					<exclude>plugin.yml</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	
+		<plugins>
+			
+			<!-- Replacer Plugin -->
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>                
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<basedir>${project.build.directory}/classes</basedir>
+					<includes>
+						<include>velocity-plugin.json</include>
+					</includes>
+					<replacements>
+						<replacement>
+							<token>id----</token>
+							<value>${pluginId}</value>
+						</replacement>
+						<replacement>
+							<token>@pluginName@</token>
+							<value>${pluginName}</value>
+						</replacement>
+						<replacement>
+							<token>@version@</token>
+							<value>${parent.version}</value>
+						</replacement>
+						<replacement>
+							<token>@author@</token>
+							<value>${author}</value>
+						</replacement>
+						<replacement>
+							<token>@description@</token>
+							<value>${description}</value>
+						</replacement>
+						<replacement>
+							<token>@url@</token>
+							<value>${website}</value>
+						</replacement>
+					</replacements>                        
+				</configuration>
+			</plugin>
+			
+			<!-- Compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			
+			<!-- Jar plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			
+			<!-- Shade plugin -->
+			<!--plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+			</plugin-->
+		</plugins>
+	</build>
+</project>
