@@ -24,7 +24,7 @@
 		<package>me.szumielxd.proxyserverlist</package>
 		<velocityMainClass>${package}.velocity.ProxyServerListVelocity</velocityMainClass>
 		<bungeeMainClass>${package}.bungee.ProxyServerListBungee</bungeeMainClass>
-		<revision>1.1.1</revision>
+		<revision>1.1.2</revision>
 		<finalName>/../../target/${fileName}-${project.version}</finalName>
 	</properties>
 
