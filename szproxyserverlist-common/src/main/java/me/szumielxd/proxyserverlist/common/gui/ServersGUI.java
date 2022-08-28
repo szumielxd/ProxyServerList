@@ -157,7 +157,9 @@ public class ServersGUI<T, U extends T> {
 		return pings.stream().map(info -> ((UnaryOperator<String>) str -> str.replace("{online}", Integer.toString(amount))
 					.replace("{maxonline}", Integer.toString(maxOnline))
 					.replace("{ping}", Integer.toString(ping))
-					.replace("{version}", versions).replace("{motd}", LegacyComponentSerializer.legacySection().serializeOrNull(info.getDescription()))
+					.replace("{playerid}", player.uniqueId().toString())
+					.replace("{playerversion}", Integer.toString(player.protocolVersion()))
+					.replace("{version}", versions).replace("{motd}", Optional.ofNullable(LegacyComponentSerializer.legacySection().serializeOrNull(info.getDescription())).orElse(""))
 		)).anyMatch(icon.getShowCondition());
 	}
 	
