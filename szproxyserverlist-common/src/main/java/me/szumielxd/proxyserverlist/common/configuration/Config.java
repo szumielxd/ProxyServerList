@@ -49,7 +49,7 @@ public enum Config {
 	MOTD_PLAYERS_SHOWMOREMAX("motd.players.show-more-max", 1),
 	MOTD_PLAYERS_DISPLAY("motd.players.display", Arrays.asList("&a", "  &7Version: &a{gversion}", "  &7Facebook: &9fb.example.com", "  &7Forum: &bforum.example.com", "  &7TeamSpeak: &cts.example.com", "  &7Discord: &4dc.example.com", "  &7Shop: &dshop.example.com", "&a", "  &7Available servers:", "    &8- {accent}{servers} &8[&6{online}/{maxonline}&8] (&7{version}&8)", "&a", "  &7Catch 'em all!", "&a")),
 	MOTD_SERVERS_HIDELISTED("motd.servers-hide-listed", true),
-	MOTD_SERVERS_ORDER("motd.servers.order", Arrays.asList("NATURAL", "ALPHABETICALLY", "ALPHABETICALLY_IGNORECASE", "ALPHABETICALLY_REVERSE", "ALPHABETICALLY_IGNORECASE_REVERSE", "ONLINE", "ONLINE_REVERSE")),
+	MOTD_SERVERS_ORDER("motd.servers-order", Arrays.asList("NATURAL", "ALPHABETICALLY", "ALPHABETICALLY_IGNORECASE", "ALPHABETICALLY_REVERSE", "ALPHABETICALLY_IGNORECASE_REVERSE", "ONLINE", "ONLINE_REVERSE")),
 	MOTD_SERVERS("motd.servers", Arrays.asList("hidden-server", "another_hidden_server")),
 	MOTD_VERSION_DISPLAY("motd.versions.display", Arrays.asList("&b{gversion} &8»&r                                                             &7Players: &6{gonline}")),
 	MOTD_DISPLAY("motd.display", Arrays.asList("&8[ &4* &8] &l«&7&m-----&r &8[ <gradient:#AA00AA:#55FFFF>&lExample.com</gradient> <gradient:#FF55FF:#FF0000>{gversion}</gradient> &8] &7&m-----&r&8&l» &8[ &4* &8]\\n&8» &6&lPvP &8- &eFight for The Queen!", "&8[ &4* &8] &l«&7&m-----&r &8[ <gradient:#AA00AA:#55FFFF>&lExample.com</gradient> <gradient:#FF55FF:#FF0000>{gversion}</gradient> &8] &7&m-----&r&8&l» &8[ &4* &8]\\n&8» <#FF69B4|&d>Supports</#FFB6C1> &4&lR&a&lG&1&lB")),
