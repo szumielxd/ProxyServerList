@@ -44,6 +44,7 @@ public class ServersGUI<T, U extends T> {
 	
 	
 	private final @NotNull ProxyServerList<T, U> plugin;
+	private final @NotNull Optional<GeyserServerForm<T, U>> geyserForm;
 	private final @NotNull Map<Integer, ItemStack> background = new HashMap<>();
 	private final @NotNull CompatibleComponent title;
 	private final @NotNull List<CompatibleComponent> format;
@@ -53,6 +54,16 @@ public class ServersGUI<T, U extends T> {
 	
 	public ServersGUI(@NotNull ProxyServerList<T, U> plugin) {
 		this.plugin = Objects.requireNonNull(plugin, "plugin cannot be null");
+		
+		Optional<GeyserServerForm<T, U>> form;
+		try {
+			Class.forName("org.geysermc.geyser.GeyserImpl");
+			form = Optional.of(new GeyserServerForm<>(plugin));
+		} catch (ClassNotFoundException e) {
+			form = Optional.empty();
+		}
+		this.geyserForm = form;
+		
 		String[] backgroundTexts = Config.GUI_COMMAND_BACKGROUND.getString().split("\\|");
 		Stream.of(backgroundTexts).forEach(str -> {
 			Matcher match = BACKGROUND_PATTERN.matcher(str);
@@ -94,7 +105,10 @@ public class ServersGUI<T, U extends T> {
 	}
 	
 	
-	public void open(UUID playerUniqueId) {
+	public void open(@NotNull UUID playerUniqueId) {
+		
+		if (this.geyserForm.filter(form -> form.open(playerUniqueId)).isPresent()) return;
+		
 		
 		ProtocolizePlayer player = Protocolize.playerProvider().player(playerUniqueId);
 		if (player != null) {
@@ -132,16 +146,24 @@ public class ServersGUI<T, U extends T> {
 	private Inventory setupIcons(@NotNull Inventory inv, @NotNull ProtocolizePlayer player) {
 		// background
 		this.background.forEach(inv::item);
+		
 		// icons
-		ServerPingManager<T, U> ping = this.plugin.getServerPingManager();
-		this.plugin.getServersConfig().getServerIcons().values().stream()
-				.filter(i -> !i.isHidingOffline() || i.getNames().stream().anyMatch(ping::isCachedOnline)).filter(i -> this.canSee(i, player))
+		this.getAvailableServerIcons(player.uniqueId(), player.protocolVersion())
 				.forEach(icon -> inv.item(icon.getSlot(), new ServerItemStack(player.protocolVersion(), format, icon, this.plugin.getSenderWrapper(), (short) 0)));
 		return inv;
 	}
 	
 	
-	private boolean canSee(SerializableServerIcon icon, ProtocolizePlayer player) {
+	public Collection<SerializableServerIcon> getAvailableServerIcons(UUID playerId, int protocol) {
+		// icons
+		ServerPingManager<T, U> ping = this.plugin.getServerPingManager();
+		return this.plugin.getServersConfig().getServerIcons().values().stream()
+				.filter(i -> !i.isHidingOffline() || i.getNames().stream().anyMatch(ping::isCachedOnline)).filter(i -> this.canSee(i, playerId, protocol))
+				.collect(Collectors.toList());
+	}
+	
+	
+	public boolean canSee(SerializableServerIcon icon, UUID playerId, int protocol) {
 		if (icon.getShowCondition() == null) return true;
 		ServerPingManager<T, U> pingManager = this.plugin.getServerPingManager();
 		SenderWrapper<T, U> senderWrapper = this.plugin.getSenderWrapper();
@@ -157,8 +179,8 @@ public class ServersGUI<T, U extends T> {
 		return pings.stream().map(info -> ((UnaryOperator<String>) str -> str.replace("{online}", Integer.toString(amount))
 					.replace("{maxonline}", Integer.toString(maxOnline))
 					.replace("{ping}", Integer.toString(ping))
-					.replace("{playerid}", player.uniqueId().toString())
-					.replace("{playerversion}", Integer.toString(player.protocolVersion()))
+					.replace("{playerid}", playerId.toString())
+					.replace("{playerversion}", Integer.toString(protocol))
 					.replace("{version}", versions).replace("{motd}", Optional.ofNullable(LegacyComponentSerializer.legacySection().serializeOrNull(info.getDescription())).orElse(""))
 		)).anyMatch(icon.getShowCondition());
 	}
