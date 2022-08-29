@@ -67,7 +67,7 @@ public class ServersConfig {
 	private boolean generateConfig() throws IOException {
 		if (!this.file.createNewFile()) return false;
 		YamlConfiguration config = new YamlConfiguration();
-		config.set("creative", new SerializableServerIcon(Arrays.asList("creative1", "creative2"), "Creative", Arrays.asList(new CompatibleComponent("Build!")), ItemType.WOODEN_AXE, NamedTextColor.LIGHT_PURPLE, false, false, 4, null).deserialize());
+		config.set("creative", new SerializableServerIcon(Arrays.asList("creative1", "creative2"), "Creative", Arrays.asList(new CompatibleComponent("Build!")), ItemType.WOODEN_AXE, NamedTextColor.LIGHT_PURPLE, false, false, 4, null, null).deserialize());
 		config.save(this.file);
 		return true;
 	}
