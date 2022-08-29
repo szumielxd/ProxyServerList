@@ -40,6 +40,8 @@ public enum Config {
 	GUI_COMMAND_TITLE("gui.title", "&5&lAvailable Servers"),
 	GUI_COMMAND_BACKGROUND("gui.background", "BLACK_STAINED_GLASS_PANE[0-54]|RED_STAINED_GLASS_PANE[4,13,22,31,40,49]"),
 	GUI_COMMAND_FORMAT("gui.format", Arrays.asList("&6&m---&k[]&6&m-------------------------&k[]&6&m---", "&8» &7Server: {accent}{name}", "&8» &7Base version: {accent}{version}", "&8» &7Online: {accent}{online}", "&8» &7Ping: {accent}{ping}", "", "&8» &7Description:", "  {accent}{description}", "&6&m---&k[]&6&m-------------------------&k[]&6&m---")),
+	GEYSER_FORM_TITLE("geyser.form.title", "Game Browser"),
+	GEYSER_FORM_CONTENT("geyser.form.content", "Chose your server"),
 	SERVERSTATUS_REFRESH_TIME("server-status.refresh-time", 5),
 	SERVERSTATUS_NOTIFY_AFTER("server-status.notify-after", 90),
 	SERVERSTATUS_NOTIFY_INTERVAL("server-status.notify-interval", 180),
