@@ -40,13 +40,21 @@ public class BungeeSenderWrapper implements SenderWrapper<CommandSender, Proxied
 	public @NotNull String getName(@NotNull CommandSender sender) {
 		return sender.getName();
 	}
+
+	@Override
+	public int getProtocolVersion(@NotNull ProxiedPlayer player) {
+		if (player.getPendingConnection() != null) return player.getPendingConnection().getVersion();
+		return -1;
+	}
 	
+	@Override
 	public void sendMessage(@NotNull CommandSender sender, @NotNull Component message) {
 		Objects.requireNonNull(sender, "sender cannot be null");
 		Objects.requireNonNull(message, "message cannot be null");
 		this.plugin.adventure().sender(sender).sendMessage(message);
 	}
 	
+	@Override
 	public boolean hasPermission(@NotNull CommandSender sender, @NotNull String permission) {
 		return Objects.requireNonNull(sender, "sender cannot be null").hasPermission(permission);
 	}

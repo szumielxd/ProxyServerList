@@ -43,13 +43,21 @@ public class VelocitySenderWrapper implements SenderWrapper<CommandSource, Playe
 		if (sender instanceof Player) return ((Player) sender).getUsername();
 		return "Console";
 	}
+
+	@Override
+	public int getProtocolVersion(@NotNull Player player) {
+		Objects.requireNonNull(player, "player cannot be null");
+		return player.getProtocolVersion().getProtocol();
+	}
 	
+	@Override
 	public void sendMessage(@NotNull CommandSource sender, @NotNull Component message) {
 		Objects.requireNonNull(sender, "sender cannot be null");
 		Objects.requireNonNull(message, "message cannot be null");
 		sender.sendMessage(message);
 	}
 	
+	@Override
 	public boolean hasPermission(@NotNull CommandSource sender, @NotNull String permission) {
 		return Objects.requireNonNull(sender, "sender cannot be null").hasPermission(permission);
 	}

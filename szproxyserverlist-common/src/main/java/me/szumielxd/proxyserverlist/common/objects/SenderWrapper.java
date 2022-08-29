@@ -18,6 +18,8 @@ public interface SenderWrapper<T, U extends T> {
 	
 	public @NotNull String getName(@NotNull T sender);
 	
+	public int getProtocolVersion(@NotNull U player);
+	
 	public boolean hasPermission(@NotNull T sender, @NotNull String permission);
 	
 	public void sendMessage(@NotNull T sender, @NotNull Component message);
@@ -27,8 +29,6 @@ public interface SenderWrapper<T, U extends T> {
 	}
 	
 	public void connectToServer(@NotNull U player, @NotNull String server, @Nullable BiConsumer<U, Boolean> resultConsumer);
-	
-	//public void ping(@NotNull String server, @NotNull Consumer<PingResult> resultConsumer);
 	
 	public @NotNull T getConsole();
 	
