@@ -29,7 +29,7 @@ public abstract class ChannelListener<T, U extends T> {
 				String guiName = in.readUTF();
 				if ("servers".equals(guiName)) {
 					UUID uuid = this.plugin.getSenderWrapper().getUniqueId(player);
-					this.plugin.getServersGUI().open(uuid);
+					this.plugin.getScheduler().runTask(() -> this.plugin.getServersGUI().open(uuid));
 				}
 			}
 			return true;
